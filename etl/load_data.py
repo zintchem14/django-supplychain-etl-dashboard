@@ -131,13 +131,29 @@ def run_etl():
         )
         expeditions_batch.append(expedition)
 
-    # 4. Insertion en masse (Bulk Create) en base de données
+    # 4. Insertion sécurisée avec conservation des relations
     print("3. CHARGEMENT FINAL : Enregistrement en base de données")
+   
+    # Étape A : Insérer les commandes d'abord
     Commande.objects.bulk_create(commandes_batch, ignore_conflicts=True)
-    Expedition.objects.bulk_create(expeditions_batch, ignore_conflicts=True)
-    print(f"Nombre total de lignes finales enregistrées en base : {Commande.objects.count()}")
-    print("ETL exécuté avec succès !")
+   
+    # Étape B : Récupérer un dictionnaire de correspondance (order_id -> instance Commande de la base)
+    print("Mise en relation des expéditions avec les commandes...")
+    commandes_dict = {c.order_id: c for c in Commande.objects.all()}
+   
+    # Étape C : Mettre à jour l'instance Commande dans chaque expédition pour pointer vers l'objet enregistré en base
+    for exp in expeditions_batch:
+        # On s'assure que l'objet commande relié possède bien l'ID de la base de données
+        if exp.commande.order_id in commandes_dict:
+            exp.commande = commandes_dict[exp.commande.order_id]
 
+    # Étape D : Insérer les expéditions
+    Expedition.objects.bulk_create(expeditions_batch, ignore_conflicts=True)
+   
+    print(f"Nombre total de commandes en base : {Commande.objects.count()}")
+    print(f"Nombre total d'expéditions en base : {Expedition.objects.count()}")
+    print("ETL exécuté avec succès !")
+    
 if __name__ == '__main__':
     run_etl()
 

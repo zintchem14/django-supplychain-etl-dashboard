@@ -24,7 +24,7 @@ class TauxLivraisonATempsView(APIView):
        
         # On compte les expéditions sans risque de retard ou livrées à temps
         # (Adaptez le filtre selon le champ exact de votre modèle Expedition, par exemple late_delivery_risk == 0)
-        expeditions_a_temps = Expedition.objects.filter(late_delivery_risk=0).count()
+        expeditions_a_temps = Expedition.objects.filter(late_delivery_risk=False).count()
        
         taux = (expeditions_a_temps / total_expeditions) * 100
        
@@ -58,7 +58,7 @@ class PointsDeBlocageView(APIView):
             Expedition.objects.values('commande__order_region') 
             .annotate(
                 total_expeditions=Count('commande'),
-                total_retards=Count('commande', filter=Q(late_delivery_risk=1)) # Ou le filtre de retard
+                total_retards=Count('commande', filter=Q(late_delivery_risk=True)) # Ou le filtre de retard
             )
             .order_by('-total_retards') # Du plus grand nombre de retards au plus faible
         )
