@@ -3,9 +3,7 @@ import {
   BarChart3,
   Truck,
   MapPin,
-  AlertTriangle,
   DollarSign,
-  Package,
   ChevronLeft,
   ChevronRight,
   Boxes
@@ -19,13 +17,12 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   const [collapsed, setCollapsed] = useState(false);
 
+  // Exactement 4 rubriques stratégiques clés
   const menuItems = [
     { id: 'overview', label: 'Vue Globale', icon: BarChart3 },
-    { id: 'shipping', label: 'Expéditions & Délais', icon: Truck },
     { id: 'map', label: 'Carte Géographique', icon: MapPin },
-    { id: 'risk', label: 'Analyse des Risques', icon: AlertTriangle },
     { id: 'financials', label: 'Ventes & Profits', icon: DollarSign },
-    { id: 'products', label: 'Produits & Catégories', icon: Package },
+    { id: 'shipping', label: 'Expéditions & Délais', icon: Truck },
   ];
 
   return (
@@ -34,14 +31,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
-      {/* Header / Logo */}
+      {/* Header / Logo DataSupply */}
       <div className="flex items-center justify-between p-4 border-b border-slate-800">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="p-2 bg-indigo-600 rounded-lg shrink-0">
-            <Boxes className="w-6 h-6 text-white" />
+          <div className="p-2 bg-sky-600/20 border border-sky-500/30 rounded-lg shrink-0">
+            <Boxes className="w-5 h-5 text-sky-400" />
           </div>
           {!collapsed && (
-            <span className="font-bold text-lg tracking-wide whitespace-nowrap text-indigo-400">
+            <span className="font-bold text-base tracking-wide whitespace-nowrap text-white">
               DataSupply
             </span>
           )}
@@ -54,7 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
         </button>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation (4 Entrées) */}
       <nav className="flex-1 p-3 space-y-1.5 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -63,25 +60,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                 isActive
-                  ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 font-medium'
+                  ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20 font-medium'
                   : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
               }`}
               title={collapsed ? item.label : undefined}
             >
-              <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-indigo-400' : 'group-hover:text-indigo-300'}`} />
+              <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-sky-400' : 'group-hover:text-slate-200'}`} />
               {!collapsed && (
-                <span className="text-sm truncate">{item.label}</span>
+                <span className="text-xs truncate">{item.label}</span>
               )}
             </button>
           );
         })}
       </nav>
 
-      {/* Footer / Info utilisateur ou projet */}
+      {/* Footer / Version */}
       {!collapsed && (
-        <div className="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+        <div className="p-3 border-t border-slate-800/80 text-[10px] text-slate-500 text-center">
           ETL Supply Chain v1.0
         </div>
       )}

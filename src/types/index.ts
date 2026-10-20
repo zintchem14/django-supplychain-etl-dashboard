@@ -13,3 +13,16 @@ export interface PointDeBlocage {
   total_expeditions: number;
   total_retards: number;
 }
+
+export interface TopMarket {
+  market: string;
+  total: number;
+}
+
+export interface KPIsGlobaux {
+  volume_total_expeditions: number;
+  benefice_total: number;
+  marge_beneficiaire_pct: number;
+  retard_moyen_jours: number;
+  top_marches: TopMarket[];
+}
