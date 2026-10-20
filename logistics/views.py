@@ -2,13 +2,16 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Expedition
+from rest_framework.decorators import api_view
 
 #LES MODULES DE LA DEUXIEME VUE LE COUT MOYEN PAR EXPEDITION
 from django.db.models import Avg
 from .models import Expedition
 
 #module pour la troisieme vue
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum, F
+
+from .models import Commande
 
 
 
@@ -67,3 +70,43 @@ class PointsDeBlocageView(APIView):
             "points_de_blocage_region": list(blocages_par_region)
         })
 
+
+# AJOUTONS D'AUTRES KPI QUI N'ont pas ete demander par l'exercice 
+@api_view(['GET'])
+def get_kpis_globaux(request):
+    stats = Commande.objects.aggregate(
+        total_expeditions=Count('order_id'),
+        total_profit=Sum('benefit_per_order'),
+        total_sales=Sum('sales'),
+    )
+
+    total_exp = stats['total_expeditions'] or 0
+    total_profit = round(stats['total_profit'] or 0, 2)
+    total_sales = stats['total_sales'] or 1.0
+    profit_margin = round((total_profit / total_sales) * 100, 2)
+
+    # Calcul du retard moyen via la relation Expedition
+    late_orders = Commande.objects.filter(
+        expedition__days_for_shipping_real__gt=F('expedition__days_for_shipment_scheduled')
+    ).aggregate(
+        avg_delay=Avg(F('expedition__days_for_shipping_real') - F('expedition__days_for_shipment_scheduled'))
+    )
+    avg_delay_days = round(late_orders['avg_delay'] or 0, 1)
+
+    # Top 3 des marchés pour le classement
+    top_markets_qs = Commande.objects.values('market').annotate(
+        total=Count('order_id')
+    ).order_by('-total')[:3]
+
+    top_markets = [
+        {"market": item['market'], "total": item['total']}
+        for item in top_markets_qs
+    ]
+
+    return Response({
+        "volume_total_expeditions": total_exp,
+        "benefice_total": total_profit,
+        "marge_beneficiaire_pct": profit_margin,
+        "retard_moyen_jours": avg_delay_days,
+        "top_marches": top_markets
+    })
