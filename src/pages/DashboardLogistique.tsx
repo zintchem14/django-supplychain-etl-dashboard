@@ -49,26 +49,25 @@ export const DashboardLogistique: React.FC = () => {
   if (loading) {
     return (
       <div className="p-4 text-slate-400 text-xs">
-        Chargement des données DataSupply...
+        Chargement de votre Dashboard Logistique...
       </div>
     );
   }
 
   return (
-    <div className="p-4 font-sans space-y-4 text-slate-100 max-w-7xl mx-auto">
+    <div className="p-6 font-sans space-y-5 text-slate-100 w-full">
      
-      {/* En-tête avec l'icône de la marque DataSupply */}
+      {/* En-tête */}
       <div className="flex items-center space-x-2 pb-2 border-b border-slate-800/80">
         <Boxes className="w-5 h-5 text-sky-400" />
         <span className="text-xs font-bold tracking-wider text-slate-200 uppercase">
-          DataSupply — Vue Synthétique
+          DataSupply — Vue Synthétique Logistique
         </span>
       </div>
-   
+  
       {/* Barre de KPI Synthétique */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-lg p-3 grid grid-cols-2 md:grid-cols-4 gap-3">
-      
-        {/* 1. Taux de Livraison */}
+       
         <div className="flex flex-col justify-center px-2">
           <div className="flex items-center space-x-1.5 text-slate-400 text-[11px] mb-0.5">
             <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
@@ -79,7 +78,6 @@ export const DashboardLogistique: React.FC = () => {
           </span>
         </div>
 
-        {/* 2. Coût Moyen */}
         <div className="flex flex-col justify-center px-2 border-l border-slate-800/80">
           <div className="flex items-center space-x-1.5 text-slate-400 text-[11px] mb-0.5">
             <DollarSign className="w-3.5 h-3.5 text-indigo-400" />
@@ -90,7 +88,6 @@ export const DashboardLogistique: React.FC = () => {
           </span>
         </div>
 
-        {/* 3. Volume Total */}
         <div className="flex flex-col justify-center px-2 border-l border-slate-800/80">
           <div className="flex items-center space-x-1.5 text-slate-400 text-[11px] mb-0.5">
             <Package className="w-3.5 h-3.5 text-sky-400" />
@@ -101,7 +98,6 @@ export const DashboardLogistique: React.FC = () => {
           </span>
         </div>
 
-        {/* 4. Retard Moyen */}
         <div className="flex flex-col justify-center px-2 border-l border-slate-800/80">
           <div className="flex items-center space-x-1.5 text-slate-400 text-[11px] mb-0.5">
             <Clock className="w-3.5 h-3.5 text-amber-400" />
@@ -114,10 +110,8 @@ export const DashboardLogistique: React.FC = () => {
 
       </div>
 
-      {/* Ligne Bénéfice/Marge & Classement des Marchés */}
+      {/* Bénéfice & Marchés Principaux */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-       
-        {/* Bénéfice & Marge */}
         <div className="bg-slate-900/60 border border-slate-800 rounded-lg p-3 flex flex-col justify-center">
           <div className="flex items-center space-x-1.5 text-slate-400 text-[11px] mb-1">
             <Award className="w-3.5 h-3.5 text-emerald-400" />
@@ -133,7 +127,6 @@ export const DashboardLogistique: React.FC = () => {
           </div>
         </div>
 
-        {/* Classement des Marchés Principaux */}
         <div className="md:col-span-2 bg-slate-900/60 border border-slate-800 rounded-lg p-3">
           <div className="flex items-center space-x-1.5 mb-2">
             <Globe className="w-3.5 h-3.5 text-purple-400" />
@@ -166,10 +159,9 @@ export const DashboardLogistique: React.FC = () => {
             )}
           </div>
         </div>
-
       </div>
 
-      {/* Tableau Visuel & Informatif des Points de Blocage */}
+      {/* Tableau des Points de Blocage */}
       <div className="bg-slate-900/60 border border-slate-800 rounded-lg p-3">
         <div className="flex items-center space-x-1.5 mb-2.5">
           <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
@@ -200,7 +192,6 @@ export const DashboardLogistique: React.FC = () => {
                     <td className="py-2 px-3 text-rose-400 font-semibold">{item.total_retards.toLocaleString()}</td>
                     <td className="py-2 px-3">
                       <div className="flex items-center space-x-2">
-                        {/* Barre de progression dynamique */}
                         <div className="w-24 bg-slate-800 h-1.5 rounded-full overflow-hidden">
                           <div
                             className={`h-full ${ratio > 40 ? 'bg-rose-500' : ratio > 25 ? 'bg-amber-500' : 'bg-emerald-500'}`}

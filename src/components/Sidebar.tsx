@@ -20,9 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   // Exactement 4 rubriques stratégiques clés
   const menuItems = [
     { id: 'overview', label: 'Vue Globale', icon: BarChart3 },
-    { id: 'map', label: 'Carte Géographique', icon: MapPin },
-    { id: 'financials', label: 'Ventes & Profits', icon: DollarSign },
-    { id: 'shipping', label: 'Expéditions & Délais', icon: Truck },
+    { id: 'map', label: 'vue detaillée', icon: MapPin },
   ];
 
   return (
