@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from apps.agent.models import AnomalyReport
 from apps.logistics.models import Commande, Entrepot, EtlRun, Expedition, Transporteur
 
 
@@ -47,3 +48,11 @@ class EtlRunSerializer(serializers.ModelSerializer):
     class Meta:
         model = EtlRun
         fields = "__all__"
+        
+        
+class AnomalyReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AnomalyReport
+        fields = ["id", "granularite", "periode_debut", "periode_fin", "taux_retard_pct",
+                  "reference_pct", "z_score", "volume", "explanation", "explanation_source",
+                  "created_at"]
