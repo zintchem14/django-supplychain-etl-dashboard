@@ -1,3 +1,7 @@
+# Fichier source : le CSV brut DataCo
+ENCODING = "latin-1"
+
+# Correspondance : colonne du fichier source -> nom interne utilisé par l'ETL
 COLUMNS = {
     "Order Id": "order_id",
     "order date (DateOrders)": "date_commande",

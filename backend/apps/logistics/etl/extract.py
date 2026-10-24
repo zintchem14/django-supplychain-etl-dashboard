@@ -1,12 +1,12 @@
 import pandas as pd
 
-from .config import COLUMNS
+from .config import COLUMNS, ENCODING
 
 
 def extract(path, limit=None) -> pd.DataFrame:
     df = pd.read_csv(
         path,
-        encoding="latin-1",
+        encoding=ENCODING,
         usecols=lambda c: c.strip() in COLUMNS,
         nrows=limit,
     )
