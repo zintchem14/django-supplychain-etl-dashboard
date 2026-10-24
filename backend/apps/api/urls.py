@@ -2,6 +2,8 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from apps.agent.views import AnomalyViewSet
+
 from . import views as v
 
 router = DefaultRouter()
@@ -10,6 +12,7 @@ router.register("entrepots", v.EntrepotViewSet)
 router.register("commandes", v.CommandeViewSet)
 router.register("expeditions", v.ExpeditionViewSet)
 router.register("etl/runs", v.EtlRunViewSet)
+router.register("anomalies", AnomalyViewSet, basename="anomalie")
 
 urlpatterns = [
     path("auth/token/", TokenObtainPairView.as_view()),

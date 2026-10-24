@@ -104,12 +104,12 @@ SIMPLE_JWT = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Supply Chain BI API",
+    "TITLE": "Supply Chain BI API",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-# --- Paramètres métier (ETL, KPI, agent) : choix du guide ---
+# --- Paramètres métier (ETL, KPI, agent) :
 ANOMALY_Z_THRESHOLD = env.float("ANOMALY_Z_THRESHOLD", default=2.5)
 ANOMALY_MIN_VOLUME = env.int("ANOMALY_MIN_VOLUME", default=30)
 BOTTLENECK_MIN_VOLUME = env.int("BOTTLENECK_MIN_VOLUME", default=100)
