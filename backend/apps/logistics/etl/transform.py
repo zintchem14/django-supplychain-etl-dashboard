@@ -1,7 +1,13 @@
 import pandas as pd
 
-from .config import (COUT_PAR_ARTICLE, DATE_FORMAT, PENALITE_JOUR_RETARD, REQUIRED,
-                     STATUT_LIVRAISON, TARIF_MODE)
+from .config import (
+    COUT_PAR_ARTICLE,
+    DATE_FORMAT,
+    PENALITE_JOUR_RETARD,
+    REQUIRED,
+    STATUT_LIVRAISON,
+    TARIF_MODE,
+)
 
 TEXT_COLS = ["statut", "segment_client", "marche", "region", "pays", "ville",
              "mode_expedition", "statut_livraison_source"]
